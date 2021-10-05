@@ -23,7 +23,8 @@ namespace DatingAPI.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, request.UserName)
+                new Claim(JwtRegisteredClaimNames.NameId, request.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, request.UserName)
             };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

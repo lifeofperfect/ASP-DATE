@@ -17,9 +17,11 @@ namespace DatingAPI.Helpers
 
             if (!resultContext.HttpContext.User.Identity.IsAuthenticated) return;
 
-            var username = resultContext.HttpContext.User.GetUsername();
+            //var username = resultContext.HttpContext.User.GetUsername();
+            var userId = resultContext.HttpContext.User.GetUserId();
             var repo = resultContext.HttpContext.RequestServices.GetService<IUserRepository>(); //import using Microsoft.Extensions.DependencyInjection for getservices to work
-            var user = await repo.GetUserByUsername(username);
+            //var user = await repo.GetUserByUsername(username);
+            var user = await repo.GetUserByIdAsync(userId);
             user.LastActive = DateTime.Now;
             await repo.SaveAllAsync();
         }
