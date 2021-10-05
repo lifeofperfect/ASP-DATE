@@ -22,6 +22,6 @@ namespace DatingAPI.Helpers
         public int MinAge { get; set; } = 18;
         public int MaxAge { get; set; } = 150;
         //implement sorting
-
+        public string OrderBy { get; set; } = "lastActive";
     }
 }
