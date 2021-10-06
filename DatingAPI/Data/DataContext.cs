@@ -15,6 +15,29 @@ namespace DatingAPI.Data
         }
         
         public DbSet<AppUser> Users { get; set; }
-       
+        public DbSet<UserLike> Likes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<UserLike>()
+                .HasKey(k => new { k.SourceUserId, k.LikedUserId }); //set primary keys
+            
+
+            builder.Entity<UserLike>()
+                .HasOne(s => s.SourceUser)
+                .WithMany(l => l.LikedUsers)
+                .HasForeignKey(j => j.SourceUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<UserLike>()
+                .HasOne(s => s.LikedUser)
+                .WithMany(l => l.LikedByUsers)
+                .HasForeignKey(p => p.LikedUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+        }
+
     }
 }
